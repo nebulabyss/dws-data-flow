@@ -74,4 +74,3 @@ for ($i = 0; $i < $array_length; $i++) {
     );
     $counter++;
 }
-?>
