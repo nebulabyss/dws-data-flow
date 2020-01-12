@@ -16,7 +16,7 @@ curl_close($ch);
 
 $head_marker = '*<br>';
 $tail_marker = '<br></font>';
-$delimiter = ',';
+$delimiter = ';';
 
 $head_pos = strpos($raw_source_data, $head_marker);
 if ($head_pos === false) {
