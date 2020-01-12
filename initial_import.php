@@ -57,11 +57,7 @@ function array_unique_multidimensional($input)
 $source_data_array = array_unique_multidimensional($source_data_array);
 $source_data_array = array_values($source_data_array);
 
-$stmt = $pdo->prepare('INSERT INTO flow_data
-
-        (date, time, height, flow)
-
-        VALUES ( :date, :time, :height, :flow)');
+$stmt = $pdo->prepare('INSERT INTO flow_data (date, time, pressure, flow) VALUES ( :date, :time, :pressure, :flow)');
 
 $counter = 0;
 $array_length = count($source_data_array);

@@ -1,8 +1,7 @@
 <?php
 require_once './pdo.php';
 
-$stmt = $pdo->prepare('SELECT * FROM flow_data
-                                ORDER BY flow_id DESC LIMIT 25');
+$stmt = $pdo->prepare('SELECT * FROM flow_data ORDER BY flow_id DESC LIMIT 25');
 
 $stmt->execute(array());
 
@@ -32,7 +31,7 @@ $stmt->execute(array());
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo '<td>' . htmlentities($row['date']) . '</td>';
                 echo '<td>' . htmlentities($row['time']) . '</td>';
-                echo '<td>' . htmlentities($row['height']) . '</td>';
+                echo '<td>' . htmlentities($row['pressure']) . '</td>';
                 echo '<td>' . htmlentities($row['flow']) . '</td>';
                 echo "</tr>";
                 echo "\r\n";
