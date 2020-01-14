@@ -65,7 +65,7 @@ for ($i = 0; $i < $array_length; $i++) {
     $stmt->execute(array(
             ':date' => $source_data_array[$counter][0],
             ':time' => $source_data_array[$counter][1],
-            ':height' => $source_data_array[$counter][2],
+            ':pressure' => $source_data_array[$counter][2],
             ':flow' => $source_data_array[$counter][3])
     );
     $counter++;
