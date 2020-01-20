@@ -34,11 +34,12 @@ $raw_source_data = substr($raw_source_data, $head_pos + strlen($head_marker), $t
 
 $patterns = array();
 $patterns[0] = '/      /';
-$patterns[1] = '/    /';
-$patterns[1] = '/   /';
-$patterns[2] = '/  /';
-$patterns[3] = '/ /';
-$patterns[4] = '/<br>/';
+$patterns[1] = '/     /';
+$patterns[2] = '/    /';
+$patterns[3] = '/   /';
+$patterns[4] = '/  /';
+$patterns[5] = '/ /';
+$patterns[6] = '/<br>/';
 $replacements = $delimiter;
 
 $raw_source_data = preg_replace($patterns, $replacements, $raw_source_data);
