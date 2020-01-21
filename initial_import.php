@@ -33,13 +33,8 @@ if ($tail_pos === false) {
 $raw_source_data = substr($raw_source_data, $head_pos + strlen($head_marker), $tail_pos - ($head_pos + strlen($head_marker)));
 
 $patterns = array();
-$patterns[0] = '/      /';
-$patterns[1] = '/     /';
-$patterns[2] = '/    /';
-$patterns[3] = '/   /';
-$patterns[4] = '/  /';
-$patterns[5] = '/ /';
-$patterns[6] = '/<br>/';
+$patterns[0] = '/( )+/';
+$patterns[1] = '/<br>/';
 $replacements = $delimiter;
 
 $raw_source_data = preg_replace($patterns, $replacements, $raw_source_data);
@@ -58,7 +53,7 @@ function array_unique_multidimensional($input)
 $source_data_array = array_unique_multidimensional($source_data_array);
 $source_data_array = array_values($source_data_array);
 
-$stmt = $pdo->prepare('INSERT INTO flow_data (date, time, pressure, flow) VALUES ( :date, :time, :pressure, :flow)');
+$stmt = $pdo->prepare('INSERT INTO flow_data (date, time, stage, flow) VALUES ( :date, :time, :pressure, :flow)');
 
 $counter = 0;
 $array_length = count($source_data_array);
