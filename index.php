@@ -22,7 +22,7 @@ $stmt->execute(array());
           <tr>
             <th>Date</th>
             <th>Time</th>
-            <th>ha(m)</th>
+            <th>Stage(m)</th>
             <th>Flow(m&sup3;/s)</th>
           </tr>
           </thead>
