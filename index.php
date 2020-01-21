@@ -31,7 +31,7 @@ $stmt->execute(array());
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo '<td>' . htmlentities($row['date']) . '</td>';
                 echo '<td>' . htmlentities($row['time']) . '</td>';
-                echo '<td>' . htmlentities($row['pressure']) . '</td>';
+                echo '<td>' . htmlentities($row['stage']) . '</td>';
                 echo '<td>' . htmlentities($row['flow']) . '</td>';
                 echo "</tr>";
                 echo "\r\n";
