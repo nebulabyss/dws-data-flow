@@ -1,7 +1,7 @@
 <?php
 require_once './pdo.php';
 
-$stmt = $pdo->prepare('SELECT * FROM flow_data ORDER BY flow_id DESC LIMIT 25');
+$stmt = $pdo->prepare('SELECT date, TIME_FORMAT(time, \'%H:%i\') time, stage, flow FROM flow_data ORDER BY flow_id DESC LIMIT 25');
 
 $stmt->execute(array());
 
