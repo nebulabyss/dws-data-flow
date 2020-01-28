@@ -1,5 +1,6 @@
 <?php
 require_once './pdo.php';
+require_once './functions.php';
 // create curl resource
 $ch = curl_init();
 
@@ -43,13 +44,6 @@ $source_data_array = explode($delimiter, $raw_source_data);
 
 $source_data_array = array_chunk($source_data_array, 4);
 
-function array_unique_multidimensional($input)
-{
-    $serialized = array_map('serialize', $input);
-    $unique = array_unique($serialized);
-    return array_intersect_key($input, $unique);
-}
-
 $source_data_array = array_unique_multidimensional($source_data_array);
 
 $source_data_array = array_values($source_data_array);
@@ -60,9 +54,7 @@ $stmt->execute(array());
 
 $last_date_time = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if ($last_date_time === false) {
-    insert_into_database($pdo, 0, $source_data_array );
-} else {
+if ($last_date_time === false) insert_into_database($pdo, 0, $source_data_array ); else {
     $date_key = array_search($last_date_time['date'], array_column($source_data_array, 0));
 
     while ($date_key < count($source_data_array)) {
@@ -73,21 +65,4 @@ if ($last_date_time === false) {
         $date_key++;
     }
     insert_into_database($pdo, $date_key, $source_data_array);
-}
-
-function insert_into_database(PDO $pdo, $counter_value, $source_data_array) {
-    $stmt = $pdo->prepare('INSERT INTO flow_data (date, time, stage, flow) VALUES ( :date, :time, :stage, :flow)');
-
-    $counter = $counter_value;
-
-    while ($counter < count($source_data_array)) {
-        $stmt->execute(array(
-                ':date' => $source_data_array[$counter][0],
-                ':time' => $source_data_array[$counter][1],
-                ':stage' => $source_data_array[$counter][2],
-                ':flow' => $source_data_array[$counter][3])
-        );
-        $counter++;
-    }
-    echo count($source_data_array) - $counter_value . ' new records fetched.';
 }
