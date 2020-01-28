@@ -60,27 +60,34 @@ $stmt->execute(array());
 
 $last_date_time = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$date_key = array_search($last_date_time['date'], array_column($source_data_array, 0));
+if ($last_date_time === false) {
+    insert_into_database($pdo, 0, $source_data_array );
+} else {
+    $date_key = array_search($last_date_time['date'], array_column($source_data_array, 0));
 
-while ($date_key < count($source_data_array)) {
-    if ($source_data_array[$date_key][1] == $last_date_time['time']) {
+    while ($date_key < count($source_data_array)) {
+        if ($source_data_array[$date_key][1] == $last_date_time['time']) {
+            $date_key++;
+            break;
+        }
         $date_key++;
-        break;
     }
-    $date_key++;
+    insert_into_database($pdo, $date_key, $source_data_array);
 }
-echo $date_key;
 
-/*highlight_string("<?php\n\$source_data_array =\n" . var_export($source_data_array, true) . ";\n?>");*/
+function insert_into_database(PDO $pdo, $counter_value, $source_data_array) {
+    $stmt = $pdo->prepare('INSERT INTO flow_data (date, time, stage, flow) VALUES ( :date, :time, :stage, :flow)');
 
-$stmt = $pdo->prepare('INSERT INTO flow_data (date, time, stage, flow) VALUES ( :date, :time, :stage, :flow)');
+    $counter = $counter_value;
 
-while ($date_key < count($source_data_array)) {
-    $stmt->execute(array(
-            ':date' => $source_data_array[$date_key][0],
-            ':time' => $source_data_array[$date_key][1],
-            ':stage' => $source_data_array[$date_key][2],
-            ':flow' => $source_data_array[$date_key][3])
-    );
-    $date_key++;
+    while ($counter < count($source_data_array)) {
+        $stmt->execute(array(
+                ':date' => $source_data_array[$counter][0],
+                ':time' => $source_data_array[$counter][1],
+                ':stage' => $source_data_array[$counter][2],
+                ':flow' => $source_data_array[$counter][3])
+        );
+        $counter++;
+    }
+    echo count($source_data_array) - $counter_value . ' new records fetched.';
 }
