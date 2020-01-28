@@ -54,11 +54,28 @@ $source_data_array = array_unique_multidimensional($source_data_array);
 
 $source_data_array = array_values($source_data_array);
 
+$stmt = $pdo->prepare('SELECT date, TIME_FORMAT(time, \'%H:%i\') time FROM flow_data ORDER BY flow_id DESC LIMIT 1');
+
+$stmt->execute(array());
+
+$last_date_time = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$date_key = array_search($last_date_time['date'], array_column($source_data_array, 0));
+
+while ($date_key < count($source_data_array)) {
+    if ($source_data_array[$date_key][1] == $last_date_time['time']) {
+        $date_key++;
+        break;
+    }
+    $date_key++;
+}
+echo $date_key;
+
+/*highlight_string("<?php\n\$source_data_array =\n" . var_export($source_data_array, true) . ";\n?>");*/
+
 $stmt = $pdo->prepare('INSERT INTO flow_data (date, time, stage, flow) VALUES ( :date, :time, :stage, :flow)');
 
-$date_key = 0;
-
-for ($i = 0; $i < count($source_data_array); $i++) {
+while ($date_key < count($source_data_array)) {
     $stmt->execute(array(
             ':date' => $source_data_array[$date_key][0],
             ':time' => $source_data_array[$date_key][1],
