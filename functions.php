@@ -21,7 +21,7 @@ function insert_into_database(PDO $pdo, $counter_value, $source_data_array) {
         );
         $counter++;
     }
-    echo$file = 'fetch_log.txt';
+    $file = 'fetch_log.txt';
     // Open the file to get existing content
     $current = file_get_contents($file);
     // Append a new person to the file
