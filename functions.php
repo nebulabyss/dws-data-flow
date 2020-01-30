@@ -21,6 +21,7 @@ function insert_into_database(PDO $pdo, $counter_value, $source_data_array) {
         );
         $counter++;
     }
+    date_default_timezone_set('Africa/Johannesburg');
     $file = 'fetch_log.txt';
     // Open the file to get existing content
     $current = file_get_contents($file);
