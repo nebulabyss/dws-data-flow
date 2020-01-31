@@ -23,10 +23,10 @@ function insert_into_database(PDO $pdo, $counter_value, $source_data_array) {
     }
     date_default_timezone_set('Africa/Johannesburg');
     $file = 'fetch_log.txt';
-    // Open the file to get existing content
-    $current = file_get_contents($file);
-    // Append a new person to the file
-    $current .= date('Y-m-d') . "\t" . date('H:i:s') . "\t" .strval(count($source_data_array) - $counter_value) . " new records fetched.\n";
+    // Generate new log entry
+    $log_insert = date('Y-m-d') . "\t" . date('H:i:s') . "\t" .strval(count($source_data_array) - $counter_value) . " new records fetched.\n";
+    // Append the existing file content
+    $log_insert .= file_get_contents($file);
     // Write the contents back to the file
-    file_put_contents($file, $current);
+    file_put_contents($file, $log_insert);
 }
