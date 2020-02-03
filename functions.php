@@ -23,10 +23,23 @@ function insert_into_database(PDO $pdo, $counter_value, $source_data_array) {
     }
     date_default_timezone_set('Africa/Johannesburg');
     $file = 'fetch_log.txt';
-    // Open the file to get existing content
-    $current = file_get_contents($file);
-    // Append a new person to the file
-    $current .= date('Y-m-d') . "\t" . date('H:i:s') . "\t" .strval(count($source_data_array) - $counter_value) . " new records fetched.\n";
+    // Generate new log entry
+    $log_insert = date('Y-m-d') . "\t" . date('H:i:s') . "\t" .strval(count($source_data_array) - $counter_value) . " new records fetched.\n";
+    // Append the existing file content
+    $log_insert .= file_get_contents($file);
     // Write the contents back to the file
-    file_put_contents($file, $current);
+    file_put_contents($file, $log_insert);
+}
+
+function fetch_chart_data(PDO $pdo) {
+    $stmt = $pdo->prepare('SELECT date, MAX(flow) as MaxFlow FROM flow_data GROUP BY date');
+
+    $stmt->execute(array());
+    $key_pairs = ($stmt->fetchAll(PDO::FETCH_KEY_PAIR));
+    $chart_data = "";
+    foreach ($key_pairs as $k => $v) {
+        $chart_data .= "['" . $k . "', " . $v . "],";
+    }
+    $chart_data = substr($chart_data, 0, -1);
+    echo $chart_data;
 }
