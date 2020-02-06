@@ -23,12 +23,14 @@ function insert_into_database(PDO $pdo, $counter_value, $source_data_array) {
     }
     date_default_timezone_set('Africa/Johannesburg');
     $file = 'fetch_log.txt';
+    // Load file content
+    $file_content = file_get_contents($file);
     // Generate new log entry
     $log_insert = date('Y-m-d') . "\t" . date('H:i:s') . "\t" .strval(count($source_data_array) - $counter_value) . " new records fetched.\n";
-    // Append the existing file content
-    $log_insert .= file_get_contents($file);
+    // Append new log entry
+    $file_content .= $log_insert;
     // Write the contents back to the file
-    file_put_contents($file, $log_insert);
+    file_put_contents($file, $file_content);
 }
 
 function fetch_chart_data(PDO $pdo) {
