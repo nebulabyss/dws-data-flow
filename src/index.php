@@ -1,6 +1,6 @@
 <?php
-include_once 'pdo.php';
-include_once 'functions.php';
+include_once './pdo.php';
+include_once './functions.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
