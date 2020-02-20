@@ -12,7 +12,7 @@ include_once './functions.php';
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
         // Load the Visualization API and the corechart package.
-        google.charts.load('current', {'packages':['corechart']});
+        let load = google.charts.load('current', {'packages':['corechart']});
 
         // Set a callback to run when the Google Visualization API is loaded.
         google.charts.setOnLoadCallback(drawChart);
@@ -24,7 +24,7 @@ include_once './functions.php';
 
             // Create the data table.
 
-            var data = new google.visualization.DataTable();
+            let data = new google.visualization.DataTable();
             data.addColumn('string', 'Date');
             data.addColumn('number', 'Flow (m³/s)');
             data.addRows([
@@ -32,7 +32,7 @@ include_once './functions.php';
             ]);
 
             // Set chart options
-            var options = {
+            let options = {
 
                 hAxis: {
                     slantedText: true
@@ -43,7 +43,7 @@ include_once './functions.php';
             };
 
             // Instantiate and draw chart.
-            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+            let chart = new google.visualization.LineChart(document.getElementById('chart_div'));
             chart.draw(data, options);
         }
     </script>
@@ -51,7 +51,7 @@ include_once './functions.php';
 
 <body>
 <h2 class="row justify-content-center m-3">Breede-Gouritz Station: H7H006</h2>
-<!--Div that will hold the pie chart-->
+<!--Div that will hold the line chart-->
 <div class="row align-items-center" id="chart_div"></div>
 </body>
 </html>
