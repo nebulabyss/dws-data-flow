@@ -34,7 +34,7 @@ function insert_into_database(PDO $pdo, $counter_value, $source_data_array) {
 }
 
 function fetch_chart_data(PDO $pdo) {
-    $stmt = $pdo->prepare('SELECT date, MAX(flow) as MaxFlow FROM flow_data GROUP BY date');
+    $stmt = $pdo->prepare('SELECT date, MAX(flow) as MaxFlow FROM flow_data WHERE date BETWEEN CURDATE() - INTERVAL 31 DAY AND CURDATE() GROUP BY date');
 
     $stmt->execute(array());
     $key_pairs = ($stmt->fetchAll(PDO::FETCH_KEY_PAIR));
